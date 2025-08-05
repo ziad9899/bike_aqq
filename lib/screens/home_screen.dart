@@ -89,7 +89,51 @@ class _HomeScreenState extends State<HomeScreen> {
                     ad['city'] ?? 'غير محدد',
                     style: const TextStyle(
                       fontSize: 12,
-                      color: Colors.grey[300],
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBannerSection() {
+    final List<String> bannerImages = [
+      'assets/images/banner2.jpg',
+      'assets/images/banner3.jpg',
+    ];
+
+    return Container(
+      height: 150,
+      margin: const EdgeInsets.all(16),
+      child: PageView.builder(
+        controller: _bannerController,
+        itemCount: bannerImages.length,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 5,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                bannerImages[index],
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey[300],
                     child: const Center(
                       child: Icon(
                         Icons.error,
@@ -348,84 +392,4 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       final allAds = snapshot.data!.docs;
 
-                      // فلترة حسب المدينة بعد التحميل
-                      final filteredAds = allAds.where((doc) {
-                        final data = doc.data() as Map<String, dynamic>;
-                        return data['city'] == _selectedCity;
-                      }).toList();
-
-                      if (filteredAds.isEmpty) {
-                        return const Center(
-                          child: Text(
-                            'لا توجد إعلانات',
-                            style: TextStyle(fontSize: 18, color: Color(0xFF333333)),
-                          ),
-                        );
-                      }
-
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: filteredAds.length,
-                        itemBuilder: (context, index) {
-                          final ad = filteredAds[index].data() as Map<String, dynamic>;
-                          return AdCard(ad: ad, adId: filteredAds[index].id);
-                        },
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    );
-  }
-},
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBannerSection() {
-    final List<String> bannerImages = [
-      'assets/images/banner2.jpg',
-      'assets/images/banner3.jpg',
-    ];
-
-    return Container(
-      height: 150,
-      margin: const EdgeInsets.all(16),
-      child: PageView.builder(
-        controller: _bannerController,
-        itemCount: bannerImages.length,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 5,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                bannerImages[index],
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey
+                      // فلترة حسب المدينة بعد
