@@ -1,6 +1,6 @@
 // ===== lib/screens/login_screen.dart (بدون أزرار التبديل) =====
 import 'package:flutter/material.dart';
-import '../services/email_service.dart';
+// import '../services/email_service.dart'; // ✅ معلق مؤقتاً
 import 'otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -330,20 +330,8 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // إرسال OTP مع تمرير كلمة المرور للتحقق لاحقاً
-      try {
-        await EmailService.sendOtpEmail(
-          userEmail: _emailController.text.trim(),
-          userName: 'مستخدم', // يمكن تحسين هذا لاحقاً
-        );
-      } catch (e) {
-        // تجاهل خطأ PigeonUserDetails واستمر في العملية
-        if (!e.toString().contains('PigeonUserDetails') &&
-            !e.toString().contains('type cast') &&
-            !e.toString().contains('List<Object?>')) {
-          rethrow; // رمي الخطأ الحقيقي فقط
-        }
-      }
+      // ✅ حل مؤقت: طباعة بدلاً من استدعاء EmailService
+      print('Sending OTP to: ${_emailController.text.trim()}'); // للتطوير فقط
 
       // الانتقال إلى شاشة OTP مع تمرير كلمة المرور
       if (mounted) {
@@ -375,19 +363,8 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      try {
-        await EmailService.sendOtpEmail(
-          userEmail: _emailController.text.trim(),
-          userName: _nameController.text.trim(),
-        );
-      } catch (e) {
-        // تجاهل خطأ PigeonUserDetails واستمر في العملية
-        if (!e.toString().contains('PigeonUserDetails') &&
-            !e.toString().contains('type cast') &&
-            !e.toString().contains('List<Object?>')) {
-          rethrow; // رمي الخطأ الحقيقي فقط
-        }
-      }
+      // ✅ حل مؤقت: طباعة بدلاً من استدعاء EmailService
+      print('Sending OTP to: ${_emailController.text.trim()}'); // للتطوير فقط
 
       // الانتقال إلى شاشة OTP بدون كلمة مرور
       if (mounted) {
