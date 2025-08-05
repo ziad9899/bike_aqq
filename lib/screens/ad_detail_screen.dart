@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../widgets/comment_card.dart';
+// import '../widgets/comment_card.dart'; // ✅ معلق مؤقتاً
 import 'main_screen.dart';
 
 class AdDetailScreen extends StatefulWidget {
@@ -20,6 +20,40 @@ class _AdDetailScreenState extends State<AdDetailScreen> {
   final TextEditingController _commentController = TextEditingController();
   final PageController _pageController = PageController();
   int _currentImageIndex = 0;
+
+  // ✅ حل مؤقت: CommentCard بديل
+  Widget CommentCard({required Map<String, dynamic> comment}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Card(
+        elevation: 1,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                comment['text'] ?? 'بدون تعليق',
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF333333),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                comment['userEmail'] ?? 'مستخدم مجهول',
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
