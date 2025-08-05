@@ -1,7 +1,7 @@
 // ===== lib/screens/signup_screen.dart =====
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../services/email_service.dart';
+// import '../services/email_service.dart'; // ✅ معلق مؤقتاً
 import 'otp_screen.dart'; // إضافة import لصفحة OTP
 
 class SignupScreen extends StatefulWidget {
@@ -429,20 +429,8 @@ class _SignupScreenState extends State<SignupScreen> {
         return;
       }
 
-      // إرسال OTP مثل تسجيل الدخول بالضبط
-      try {
-        await EmailService.sendOtpEmail(
-          userEmail: email,
-          userName: _nameController.text.trim(),
-        );
-      } catch (e) {
-        // تجاهل خطأ PigeonUserDetails واستمر في العملية
-        if (!e.toString().contains('PigeonUserDetails') &&
-            !e.toString().contains('type cast') &&
-            !e.toString().contains('List<Object?>')) {
-          rethrow; // رمي الخطأ الحقيقي فقط
-        }
-      }
+      // ✅ حل مؤقت: طباعة بدلاً من استدعاء EmailService
+      print('Sending OTP to: $email for signup'); // للتطوير فقط
 
       // الانتقال إلى شاشة OTP مثل تسجيل الدخول بالضبط
       if (mounted) {
