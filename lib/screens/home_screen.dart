@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'category_screen.dart';
-import '../widgets/ad_card.dart';
+// import '../widgets/ad_card.dart'; // ✅ معلق مؤقتاً
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -41,39 +41,55 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget _buildBannerSection() {
-    final List<String> bannerImages = [
-      'assets/images/banner2.jpg',
-      'assets/images/banner3.jpg',
-    ];
-
+  // ✅ حل مؤقت: AdCard بديل
+  Widget AdCard({required Map<String, dynamic> ad, required String adId}) {
     return Container(
-      height: 150,
-      margin: const EdgeInsets.all(16),
-      child: PageView.builder(
-        controller: _bannerController,
-        itemCount: bannerImages.length,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 5,
-                  offset: const Offset(0, 2),
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                ad['title'] ?? 'بدون عنوان',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF333333),
                 ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                bannerImages[index],
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey[300],
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                ad['description'] ?? 'بدون وصف',
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${ad['price'] ?? '0'} ريال',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF006241),
+                    ),
+                  ),
+                  Text(
+                    ad['city'] ?? 'غير محدد',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[300],
                     child: const Center(
                       child: Icon(
                         Icons.error,
@@ -368,4 +384,48 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
+},
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBannerSection() {
+    final List<String> bannerImages = [
+      'assets/images/banner2.jpg',
+      'assets/images/banner3.jpg',
+    ];
+
+    return Container(
+      height: 150,
+      margin: const EdgeInsets.all(16),
+      child: PageView.builder(
+        controller: _bannerController,
+        itemCount: bannerImages.length,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 5,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                bannerImages[index],
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey
