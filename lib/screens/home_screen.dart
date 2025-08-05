@@ -392,4 +392,40 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       final allAds = snapshot.data!.docs;
 
-                      // فلترة حسب المدينة بعد
+                      // فلترة حسب المدينة بعد التحميل
+                      final filteredAds = allAds.where((doc) {
+                        final data = doc.data() as Map<String, dynamic>;
+                        return data['city'] == _selectedCity;
+                      }).toList();
+
+                      if (filteredAds.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            'لا توجد إعلانات',
+                            style: TextStyle(fontSize: 18, color: Color(0xFF333333)),
+                          ),
+                        );
+                      }
+
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: filteredAds.length,
+                        itemBuilder: (context, index) {
+                          final ad = filteredAds[index].data() as Map<String, dynamic>;
+                          return AdCard(ad: ad, adId: filteredAds[index].id);
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+}
