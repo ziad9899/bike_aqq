@@ -11,7 +11,7 @@ import 'otp_screen.dart';
 
 // استيراد الخدمات الموجودة
 import '../services/auth_service.dart';
-import '../services/email_service.dart';
+// تم إزالة استيراد email_service.dart لأنه غير موجود
 
 class ProfileScreen extends StatefulWidget {
   @override
