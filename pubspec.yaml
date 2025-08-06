@@ -12,8 +12,8 @@ dependencies:
   firebase_auth: ^4.16.0
   cloud_firestore: ^4.17.5
   firebase_storage: ^11.7.7
-  # تسجيل الدخول الاجتماعي
-  google_sign_in: ^6.1.6
+  # تسجيل الدخول الاجتماعي - معلق مؤقتاً بسبب تضارب الإصدارات
+  # google_sign_in: ^6.1.6
   # Apple Sign-In (تم التعليق مؤقتًا)
   # sign_in_with_apple: ^5.0.0
   # UI & Images
@@ -55,12 +55,10 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/images/banner1.jpg"
-  adaptive_icon_background: "
-#ffffff"
+  adaptive_icon_background: "#ffffff"
   adaptive_icon_foreground: "assets/images/banner1.jpg"
 flutter_native_splash:
-  color: "
-#ffffff"
+  color: "#ffffff"
   image: assets/images/banner1.jpg
   android: true
   ios: true
