@@ -34,6 +34,14 @@ post_install do |installer|
     
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      
+      # Fix ARM64 compilation issue
+      config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      
+      # Remove problematic flags
+      config.build_settings['OTHER_CFLAGS'] ||= []
+      config.build_settings['OTHER_CFLAGS'].reject! { |flag| flag == '-G' }
     end
   end
 end
