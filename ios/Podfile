@@ -1,7 +1,5 @@
-# Uncomment this line to define a global platform for your project
 platform :ios, '13.0'
 
-# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
@@ -31,8 +29,14 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
+  # 🔹 حل مشكلة التعارض بتثبيت GoogleUtilities بشكل صريح
+  pod 'GoogleUtilities', '~> 8.0'
+  pod 'FirebaseCore', '~> 10.25.0'
+  pod 'FirebaseAuth', '~> 10.25.0'
+  pod 'GoogleSignIn', '~> 8.0'
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-  
+
   target 'RunnerTests' do
     inherit! :search_paths
   end
@@ -41,20 +45,8 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-    
-    # Fix for iOS 13.0+ compatibility
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-    end
-  end
-  
-  # Fix GoogleUtilities version conflicts
-  installer.pods_project.targets.each do |target|
-    if target.name == 'GoogleUtilities'
-      target.build_configurations.each do |config|
-        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= []
-        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'GLOG_NO_ABBREVIATED_SEVERITIES=1'
-      end
     end
   end
 end
