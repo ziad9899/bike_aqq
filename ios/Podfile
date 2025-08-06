@@ -21,6 +21,7 @@ def flutter_root
   raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
 end
 
+# ✅ هذا السطر الآن بدون أي مسار ويندوز
 require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
 
 flutter_ios_podfile_setup
@@ -29,7 +30,7 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-  # 🔹 حل مشكلة التعارض بتثبيت GoogleUtilities بشكل صريح
+  # 🔹 حل مشكلة GoogleUtilities/Firebase
   pod 'GoogleUtilities', '~> 8.0'
   pod 'FirebaseCore', '~> 10.25.0'
   pod 'FirebaseAuth', '~> 10.25.0'
